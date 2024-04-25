@@ -3,14 +3,14 @@ name: Wordlist Updater - words
 on:
   push:
     paths:
-    - 'Discovery/Web-Content/common.txt'
-    - 'Discovery/Web-Content/raft-small-words.txt'
-    - 'Discovery/Web-Content/raft-small-words-lowercase.txt'
-    - 'Discovery/Web-Content/raft-medium-words-lowercase.txt'
-    - 'Discovery/Web-Content/raft-medium-words.txt'
-    - 'Discovery/Web-Content/big.txt'
-    - 'Discovery/Web-Content/raft-large-words-lowercase.txt'
-    - 'Discovery/Web-Content/raft-large-words.txt'
+      - 'Discovery/Web-Content/common.txt'
+      - 'Discovery/Web-Content/raft-small-words.txt'
+      - 'Discovery/Web-Content/raft-small-words-lowercase.txt'
+      - 'Discovery/Web-Content/raft-medium-words-lowercase.txt'
+      - 'Discovery/Web-Content/raft-medium-words.txt'
+      - 'Discovery/Web-Content/big.txt'
+      - 'Discovery/Web-Content/raft-large-words-lowercase.txt'
+      - 'Discovery/Web-Content/raft-large-words.txt'
 
 jobs:
   update_combined_words:
@@ -20,7 +20,7 @@ jobs:
       - name: Generate combined_words.txt
         run: cd Discovery/Web-Content/ && cat common.txt raft-small-words* raft-medium-words* big.txt raft-large-words* | awk '! seen[$0]++' > combined_words.txt
       - name: Switching from HTTPS to SSH
-        run: git remote set-url origin git@github.com:danielmiessler/SecLists.git
+        run: git remote set-url origin git@github.com:${{ GITHUB_REPOSITORY }}.git
       - name: Check for changes
         run: git status
       - name: Stage changed files
